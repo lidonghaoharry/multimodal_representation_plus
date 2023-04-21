@@ -2,7 +2,7 @@
 
 Code for Vision and Touch Multimodel Representation
 
-Originally written by: Matthew Tan, Michelle Lee, Peter Zachares, Yuke Zhu 
+Originally written by: Matthew Tan, Michelle Lee, Peter Zachares, Yuke Zhu  \\
 Reimplemented and extended by: Donghao Li, Yuhang Mei
 
 ## requirements
