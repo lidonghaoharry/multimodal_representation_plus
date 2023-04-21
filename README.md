@@ -1,9 +1,9 @@
 # Multimodal Representation 
 
-Code for Making Sense of Vision and Touch. 
-https://sites.google.com/view/visionandtouch
+Code for Vision and Touch Multimodel Representation
 
-Code written by: Matthew Tan, Michelle Lee, Peter Zachares, Yuke Zhu 
+Originally written by: Matthew Tan, Michelle Lee, Peter Zachares, Yuke Zhu 
+Reimplemented and extended by: Donghao Li, Yuhang Mei
 
 ## requirements
 `pip install -r requirements.txt`
@@ -15,8 +15,16 @@ cd multimodal/dataset
 ./download_data.sh
 ```
 ## run training
+Three options are provided:
 
-`python mini_main.py --config configs/training_default.yaml`
+### Implementation of paper https://arxiv.org/abs/1810.10191
+`python mini_main.py --config configs/training_default_origin.yaml`
+
+### Implementation of paper https://arxiv.org/abs/1907.13098 with adding camera-depth as input and optical flow masks, next end of effector pose for output (set 'usingDepth' to True in yaml)
+`python mini_main.py --config configs/training_default_depth.yaml`
+
+### Implementation of adaptive weighted average multimodal representation layer (set 'usingDepth', 'weighted' and 'deterministic' to True in yaml)
+`python mini_main.py --config configs/training_default_depth_weight.yaml`
 
 
 ## ROBOT DATASET
