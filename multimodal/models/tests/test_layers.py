@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from models.base_models.layers import conv2d, CausalConv1D
+from models.base_models_depth.layers import conv2d, CausalConv1D
 
 
 class TestConv2d:

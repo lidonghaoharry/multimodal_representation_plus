@@ -3,7 +3,8 @@ import argparse
 import yaml
 
 from logger import Logger
-from trainers.selfsupervised import selfsupervised
+from trainers.selfsupervised_depth import selfsupervised_depth
+from trainers.selfsupervised_origin import selfsupervised_origin
 
 if __name__ == "__main__":
 
@@ -27,11 +28,14 @@ if __name__ == "__main__":
     # Merge configs and args
     for arg in vars(args):
         configs[arg] = getattr(args, arg)
-
+    useDepth = configs['usingDepth']
     # Initialize the loggers
     logger = Logger(configs)
 
     # Initialize the trainer
-    trainer = selfsupervised(configs, logger)
-
+    print("USING DEPTH", useDepth)
+    if useDepth:
+        trainer = selfsupervised_depth(configs, logger)
+    else:
+        trainer = selfsupervised_origin(configs, logger)
     trainer.train()
