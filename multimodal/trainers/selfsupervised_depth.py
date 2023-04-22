@@ -51,6 +51,7 @@ class selfsupervised_depth:
             z_dim=configs["zdim"],
             action_dim=configs["action_dim"],
             weighted = configs["weighted"],
+            added = configs["added"]
         ).to(self.device)
 
         self.optimizer = optim.Adam(

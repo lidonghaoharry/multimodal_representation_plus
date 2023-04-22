@@ -33,7 +33,7 @@ class SensorFusion(nn.Module):
     """
 
     def __init__(
-        self, device, z_dim=128, action_dim=4, encoder=False, deterministic=False, weighted=True
+        self, device, z_dim=128, action_dim=4, encoder=False, deterministic=False, weighted=False, added = False
     ):
         super().__init__()
 
@@ -42,6 +42,7 @@ class SensorFusion(nn.Module):
         self.device = device
         self.deterministic = deterministic
         self.weighted = weighted
+        self.added = added
 
         # zero centered, 1 std normal distribution
         self.z_prior_m = torch.nn.Parameter(
@@ -102,6 +103,14 @@ class SensorFusion(nn.Module):
                 self.fusion_fc2 = nn.Sequential(
                     nn.Linear(self.z_dim, self.z_dim), nn.LeakyReLU(0.1, inplace=True)
                 )
+            elif(added):
+                # print("***********WEIGHT************INITIALIZED")
+                self.fusion_fc1 = nn.Sequential(
+                    nn.Linear(2 * self.z_dim, 128), nn.LeakyReLU(0.1, inplace=True)
+                )
+                self.fusion_fc2 = nn.Sequential(
+                    nn.Linear(self.z_dim, self.z_dim), nn.LeakyReLU(0.1, inplace=True)
+                )
             else: 
                 self.fusion_fc1 = nn.Sequential(
                     nn.Linear(4 * 2 * self.z_dim, 128), nn.LeakyReLU(0.1, inplace=True)
@@ -145,6 +154,10 @@ class SensorFusion(nn.Module):
                 proprio_out = self.prop_weight/total_weight * proprio_out
                 mm_f1 = (img_out+ frc_out+ proprio_out+ depth_out).squeeze(dim=2)
                 # print("mf1_shape: ", mm_f1.shape)
+                mm_f2 = self.fusion_fc1(mm_f1)
+                z = self.fusion_fc2(mm_f2)
+            elif self.added:
+                mm_f1 = (img_out+ frc_out+ proprio_out+ depth_out).squeeze(dim=2)
                 mm_f2 = self.fusion_fc1(mm_f1)
                 z = self.fusion_fc2(mm_f2)
 
@@ -220,10 +233,10 @@ class SensorFusionSelfSupervised(SensorFusion):
     """
 
     def __init__(
-        self, device, z_dim=128, action_dim=4, encoder=False, deterministic=False, weighted=False
+        self, device, z_dim=128, action_dim=4, encoder=False, deterministic=False, weighted=False, added=False,
     ):
 
-        super().__init__(device, z_dim, action_dim, encoder, deterministic)
+        super().__init__(device, z_dim, action_dim, encoder, deterministic, weighted, added)
 
         self.deterministic = deterministic
         self.weighted = weighted

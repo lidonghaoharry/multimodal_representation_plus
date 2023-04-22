@@ -7,6 +7,7 @@ test: True
 encoder: False
 deterministic: True
 weighted : True
+added: False
 vision: 1.0
 depth: 1.0
 proprio: 1.0

@@ -6,6 +6,8 @@ test: True
 # Ablations
 encoder: False
 deterministic: False
+weighted: False
+added: False
 vision: 1.0
 depth: 1.0
 proprio: 1.0

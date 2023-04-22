@@ -15,7 +15,7 @@ cd multimodal/dataset
 ./download_data.sh
 ```
 ## run training
-Three options are provided:
+Four options are provided:
 
 ### Implementation of paper https://arxiv.org/abs/1810.10191
 `python mini_main.py --config configs/training_default_origin.yaml`
@@ -23,9 +23,15 @@ Three options are provided:
 ### Implementation of paper https://arxiv.org/abs/1907.13098 with adding camera-depth as input and optical flow masks, next end of effector pose for output (set 'usingDepth' to True in yaml)
 `python mini_main.py --config configs/training_default_depth.yaml`
 
-### Implementation of adaptive weighted average multimodal representation layer (set 'usingDepth', 'weighted' and 'deterministic' to True in yaml)
+### Implementation of adaptive weighted average multimodal fusion baseline (set 'usingDepth', 'weighted' and 'deterministic' to True, 'added' to False in yaml)
 `python mini_main.py --config configs/training_default_depth_weight.yaml`
 
+### Implementation of simple addition multimodal fusion baseline (set 'usingDepth', 'added' and 'deterministic' to True, 'weighted' to False in yaml)
+`python mini_main.py --config configs/training_default_depth_added.yaml`
+
+## To display logging
+`pip install tensorboard`
+`tensorboard --logdir /multimodal/logging` will display all five modals trained so far
 
 ## ROBOT DATASET
 ----
